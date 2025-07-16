@@ -53,18 +53,12 @@ header p.lead {
   margin-bottom: 25px;
   border-radius: 10px;
   box-shadow: 0 3px 12px var(--shadow-color);
-  animation: slideIn 0.5s ease-out;
 }
 
 .instruction-banner .info-icon {
   margin-right: 12px;
   color: var(--primary-color);
   font-size: 1.3rem;
-}
-
-@keyframes slideIn {
-  from { transform: translateY(-20px); opacity: 0; }
-  to { transform: translateY(0); opacity: 1; }
 }
 
 .tabs {
@@ -204,12 +198,6 @@ header p.lead {
 .modal-content {
   border-radius: 12px;
   box-shadow: 0 6px 30px var(--shadow-color);
-  animation: popIn 0.3s ease-out;
-}
-
-@keyframes popIn {
-  from { transform: scale(0.95); opacity: 0; }
-  to { transform: scale(1); opacity: 1; }
 }
 
 .modal-header {
