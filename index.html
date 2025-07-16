@@ -10,10 +10,10 @@
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <div class="container">
+  <div class="container-fluid">
     <header class="text-center">
-      <h1>STEPS Decision Aid Tool</h1>
-      <p class="lead">Explore different configurations for Field Epidemiology Training Program (FETP) to predict programme uptake, evaluate cost–benefit tradeoffs, and inform policy design.</p>
+      <h1>Advanced FETP Decision Aid Tool</h1>
+      <p class="lead">Explore different configurations for the Advanced Field Epidemiology Training Program (FETP) to predict programme uptake, evaluate cost–benefit tradeoffs, and inform policy design.</p>
     </header>
     <div class="instruction-banner card">
       <i class="fa-solid fa-circle-info info-icon" data-bs-toggle="tooltip" title="Follow these steps to use the tool"></i>
@@ -62,8 +62,8 @@
       </div>
       <div class="tab-pane fade" id="attributesTab" role="tabpanel" aria-labelledby="attributesTab-tab">
         <h2>Key Program Attributes <i class="fa-solid fa-circle-info info-icon" data-bs-toggle="tooltip" title="What each setting means"></i></h2>
-        <div class="row">
-          <div class="col-md-6">
+        <div class="row g-4">
+          <div class="col-md-6 col-lg-4">
             <div class="card attribute-card">
               <div class="attribute-icon"><i class="fa-solid fa-chalkboard"></i></div>
               <div class="attribute-content">
@@ -73,7 +73,7 @@
               </div>
             </div>
           </div>
-          <div class="col-md-6">
+          <div class="col-md-6 col-lg-4">
             <div class="card attribute-card">
               <div class="attribute-icon"><i class="fa-solid fa-user-clock"></i></div>
               <div class="attribute-content">
@@ -83,7 +83,7 @@
               </div>
             </div>
           </div>
-          <div class="col-md-6">
+          <div class="col-md-6 col-lg-4">
             <div class="card attribute-card">
               <div class="attribute-icon"><i class="fa-solid fa-graduation-cap"></i></div>
               <div class="attribute-content">
@@ -93,7 +93,7 @@
               </div>
             </div>
           </div>
-          <div class="col-md-6">
+          <div class="col-md-6 col-lg-4">
             <div class="card attribute-card">
               <div class="attribute-icon"><i class="fa-solid fa-people-group"></i></div>
               <div class="attribute-content">
@@ -103,7 +103,7 @@
               </div>
             </div>
           </div>
-          <div class="col-md-6">
+          <div class="col-md-6 col-lg-4">
             <div class="card attribute-card">
               <div class="attribute-icon"><i class="fa-solid fa-hand-holding-dollar"></i></div>
               <div class="attribute-content">
@@ -113,7 +113,7 @@
               </div>
             </div>
           </div>
-          <div class="col-md-6">
+          <div class="col-md-6 col-lg-4">
             <div class="card attribute-card">
               <div class="attribute-icon"><i class="fa-solid fa-briefcase"></i></div>
               <div class="attribute-content">
@@ -123,7 +123,7 @@
               </div>
             </div>
           </div>
-          <div class="col-md-6">
+          <div class="col-md-6 col-lg-4">
             <div class="card attribute-card">
               <div class="attribute-icon"><i class="fa-solid fa-map"></i></div>
               <div class="attribute-content">
@@ -133,7 +133,7 @@
               </div>
             </div>
           </div>
-          <div class="col-md-6">
+          <div class="col-md-6 col-lg-4">
             <div class="card attribute-card">
               <div class="attribute-icon"><i class="fa-solid fa-certificate"></i></div>
               <div class="attribute-content">
@@ -143,7 +143,7 @@
               </div>
             </div>
           </div>
-          <div class="col-md-6">
+          <div class="col-md-6 col-lg-4">
             <div class="card attribute-card">
               <div class="attribute-icon"><i class="fa-solid fa-calculator"></i></div>
               <div class="attribute-content">
@@ -159,8 +159,8 @@
         <div class="card">
           <h2>Configure Program <i class="fa-solid fa-circle-info info-icon" data-bs-toggle="tooltip" title="Choose program settings"></i></h2>
           <form>
-            <div class="input-cards row">
-              <div class="col-md-4 input-level-card">
+            <div class="input-cards row g-4">
+              <div class="col-md-6 col-lg-4 input-level-card">
                 <h3>Training Delivery Method</h3>
                 <p>(Default: Hybrid)</p>
                 <select name="deliveryMethod" class="form-control">
@@ -169,7 +169,7 @@
                   <option value="online">Fully Online</option>
                 </select>
               </div>
-              <div class="col-md-4 input-level-card">
+              <div class="col-md-6 col-lg-4 input-level-card">
                 <h3>Training Model</h3>
                 <p>(Default: Part-Time)</p>
                 <select name="trainingModel" class="form-control">
@@ -177,7 +177,7 @@
                   <option value="fulltime">Full-Time Model (Scholarship)</option>
                 </select>
               </div>
-              <div class="col-md-4 input-level-card">
+              <div class="col-md-6 col-lg-4 input-level-card">
                 <h3>Type of Training</h3>
                 <p>(Default: Advanced)</p>
                 <select name="trainingType" class="form-control">
@@ -186,7 +186,7 @@
                   <option value="advanced" selected>Advanced</option>
                 </select>
               </div>
-              <div class="col-md-4 input-level-card">
+              <div class="col-md-6 col-lg-4 input-level-card">
                 <h3>Annual Training Capacity</h3>
                 <p>(Default: 100 trainees)</p>
                 <select name="annualCapacity" class="form-control">
@@ -196,7 +196,7 @@
                   <option value="2000">2000+ trainees</option>
                 </select>
               </div>
-              <div class="col-md-4 input-level-card">
+              <div class="col-md-6 col-lg-4 input-level-card">
                 <h3>Stipend Support</h3>
                 <p>(Default: ₹75,000)</p>
                 <select name="stipendSupport" class="form-control">
@@ -205,7 +205,7 @@
                   <option value="150000">₹150,000</option>
                 </select>
               </div>
-              <div class="col-md-4 input-level-card">
+              <div class="col-md-6 col-lg-4 input-level-card">
                 <h3>Career Pathways</h3>
                 <p>(Default: Government roles)</p>
                 <select name="careerPathway" class="form-control">
@@ -215,7 +215,7 @@
                   <option value="private">Private/NGOs</option>
                 </select>
               </div>
-              <div class="col-md-4 input-level-card">
+              <div class="col-md-6 col-lg-4 input-level-card">
                 <h3>Geographic Distribution</h3>
                 <p>(Default: Regional)</p>
                 <select name="geographicDistribution" class="form-control">
@@ -224,7 +224,7 @@
                   <option value="nationwide">Nationwide Distribution</option>
                 </select>
               </div>
-              <div class="col-md-4 input-level-card">
+              <div class="col-md-6 col-lg-4 input-level-card">
                 <h3>Accreditation & Quality</h3>
                 <p>(Default: National)</p>
                 <select name="accreditation" class="form-control">
@@ -233,7 +233,7 @@
                   <option value="international">International</option>
                 </select>
               </div>
-              <div class="col-md-4 input-level-card">
+              <div class="col-md-6 col-lg-4 input-level-card">
                 <h3>Total Cost</h3>
                 <p>(Default: Medium - ₹55,000/month)</p>
                 <select name="totalCost" class="form-control">
@@ -308,7 +308,7 @@
             </ul>
             <p>The data sources used to measure and value outcomes should be clearly provided. Consider also whether these data sources were likely to provide accurate and reliable information.</p>
           </div>
-          <div class="row">
+          <div class="row g-4">
             <div class="col-md-6">
               <h5>Direct Costs (Adjust for custom analysis)</h5>
               <div class="form-group mb-3">
@@ -415,8 +415,12 @@
             </div>
           </div>
           <div id="costsBenefitsResults"></div>
-          <canvas id="costBenefitChart" class="chart-box"></canvas>
-          <canvas id="netBenefitChart" class="chart-box"></canvas>
+          <div class="chart-container">
+            <canvas id="costBenefitChart" class="chart-box"></canvas>
+          </div>
+          <div class="chart-container">
+            <canvas id="netBenefitChart" class="chart-box"></canvas>
+          </div>
         </div>
       </div>
       <div class="tab-pane fade" id="scenariosTab" role="tabpanel" aria-labelledby="scenariosTab-tab">
