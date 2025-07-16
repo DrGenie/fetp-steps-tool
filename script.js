@@ -111,6 +111,8 @@ function calculateScenario() {
     <p><strong>Accreditation:</strong> ${scenario.accreditation}</p>
     <p><strong>Total Cost:</strong> ${scenario.totalCost}</p>
   `;
+  const modal = new bootstrap.Modal(document.getElementById('resultModal'));
+  modal.show();
 }
 
 /* Render Uptake Bar */
@@ -144,6 +146,8 @@ function showUptakeRecommendations() {
     recommendation = 'Uptake is high. This configuration is promising.';
   }
   document.getElementById('uptakeResults').innerHTML = `<p>${recommendation}</p>`;
+  const modal = new bootstrap.Modal(document.getElementById('uptakeModal'));
+  modal.show();
 }
 
 /* Calculate Total Cost from Inputs */
