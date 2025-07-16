@@ -1,12 +1,13 @@
 /* Advanced FETP Decision Aid Tool
- * - Tab switching and accordiosn toggling
- * - DCE model for uptake predictiocn
+ * - Tab switching and accordion toggling
+ * - DCE model for uptake prediction
  * - Chart rendering for adoption and cost-benefit analysis
  * - Scenario saving and PDF export
  * - Optimization for maximum uptake
  */
 
 /* Global variables */
+let currentScenario = null;
 let probChartFETP = null;
 let costBenefitChart = null;
 let netBenefitChart = null;
@@ -88,12 +89,12 @@ function computeFETPUptake(sc) {
 
 /* Calculate Scenario */
 function calculateScenario() {
-  const scenario = buildFETPScenario();
-  if (!scenario) {
+  currentScenario = buildFETPScenario();
+  if (!currentScenario) {
     alert("Please select all required fields before calculating.");
     return;
   }
-  const fraction = computeFETPUptake(scenario);
+  const fraction = computeFETPUptake(currentScenario);
   const pct = fraction * 100;
   const recommendation = pct < 30 ? "Uptake is low. Consider revising features." :
                         pct < 70 ? "Uptake is moderate. Some adjustments may boost support." :
@@ -103,17 +104,17 @@ function calculateScenario() {
       <div class="col-md-6">
         <p><strong>Predicted Uptake:</strong> ${pct.toFixed(2)}%</p>
         <p><strong>Recommendation:</strong> ${recommendation}</p>
-        <p><strong>Delivery Method:</strong> ${scenario.deliveryMethod}</p>
-        <p><strong>Training Model:</strong> ${scenario.trainingModel}</p>
-        <p><strong>Type of Training:</strong> ${scenario.trainingType}</p>
+        <p><strong>Delivery Method:</strong> ${currentScenario.deliveryMethod}</p>
+        <p><strong>Training Model:</strong> ${currentScenario.trainingModel}</p>
+        <p><strong>Type of Training:</strong> ${currentScenario.trainingType}</p>
       </div>
       <div class="col-md-6">
-        <p><strong>Annual Capacity:</strong> ${scenario.annualCapacity}</p>
-        <p><strong>Stipend Support:</strong> ₹${scenario.stipendSupport}</p>
-        <p><strong>Career Pathway:</strong> ${scenario.careerPathway}</p>
-        <p><strong>Geographic Distribution:</strong> ${scenario.geographicDistribution}</p>
-        <p><strong>Accreditation:</strong> ${scenario.accreditation}</p>
-        <p><strong>Total Cost:</strong> ${scenario.totalCost}</p>
+        <p><strong>Annual Capacity:</strong> ${currentScenario.annualCapacity}</p>
+        <p><strong>Stipend Support:</strong> ₹${currentScenario.stipendSupport}</p>
+        <p><strong>Career Pathway:</strong> ${currentScenario.careerPathway}</p>
+        <p><strong>Geographic Distribution:</strong> ${currentScenario.geographicDistribution}</p>
+        <p><strong>Accreditation:</strong> ${currentScenario.accreditation}</p>
+        <p><strong>Total Cost:</strong> ${currentScenario.totalCost}</p>
       </div>
     </div>
   `;
@@ -123,9 +124,8 @@ function calculateScenario() {
 
 /* Render Uptake Bar */
 function renderUptakeBar() {
-  const scenario = buildFETPScenario();
-  if (!scenario) return;
-  const uptake = computeFETPUptake(scenario) * 100;
+  if (!currentScenario) return;
+  const uptake = computeFETPUptake(currentScenario) * 100;
   const uptakeBar = document.getElementById("uptakeBar");
   uptakeBar.style.width = `${uptake}%`;
   uptakeBar.textContent = `${uptake.toFixed(2)}%`;
@@ -137,12 +137,11 @@ function renderUptakeBar() {
 
 /* Show Uptake Recommendations */
 function showUptakeRecommendations() {
-  const scenario = buildFETPScenario();
-  if (!scenario) {
-    alert("Please select all required fields first.");
+  if (!currentScenario) {
+    alert("Please calculate a scenario first.");
     return;
   }
-  const uptake = computeFETPUptake(scenario) * 100;
+  const uptake = computeFETPUptake(currentScenario) * 100;
   let recommendation = '';
   if (uptake < 30) {
     recommendation = 'Uptake is low. Consider revising features.';
@@ -189,102 +188,95 @@ function calculateTotalCost() {
 
 /* Render Cost-Benefit Chart */
 function renderCostBenefitChart() {
-  const scenario = buildFETPScenario();
-  if (!scenario) return;
-  const trainees = parseInt(scenario.annualCapacity, 10);
-  const uptake = computeFETPUptake(scenario);
+  if (!currentScenario) return;
+  const trainees = parseInt(currentScenario.annualCapacity, 10);
+  const uptake = computeFETPUptake(currentScenario);
   const effectiveEnrollment = trainees * uptake;
   const totalCost = calculateTotalCost();
   const qVal = document.getElementById("benefitScenario").value === "low" ? 0.01 :
                document.getElementById("benefitScenario").value === "high" ? 0.08 : 0.05;
   const monetizedBenefits = effectiveEnrollment * qVal * 50000;
   const netBenefit = monetizedBenefits - totalCost;
-  const ctx = document.getElementById("costBenefitChart");
-  if (ctx) {
-    if (costBenefitChart) costBenefitChart.destroy();
-    costBenefitChart = new Chart(ctx, {
-      type: "bar",
-      data: {
-        labels: ["Total Cost", "Monetized Benefits", "Net Benefit"],
-        datasets: [{
-          label: "₹",
-          data: [totalCost, monetizedBenefits, netBenefit],
-          backgroundColor: ["#ef4444", "#22c55e", "#f59e0b"]
-        }]
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-          title: { display: true, text: "Cost-Benefit Analysis", font: { size: 16 } },
-          legend: { display: false },
-          tooltip: {
-            callbacks: {
-              label: function(context) {
-                return `${context.label}: ₹${context.parsed.y.toLocaleString()}`;
-              }
+  const ctx = document.getElementById("costBenefitChart").getContext("2d");
+  if (costBenefitChart) costBenefitChart.destroy();
+  costBenefitChart = new Chart(ctx, {
+    type: "bar",
+    data: {
+      labels: ["Total Cost", "Monetized Benefits", "Net Benefit"],
+      datasets: [{
+        label: "₹",
+        data: [totalCost, monetizedBenefits, netBenefit],
+        backgroundColor: ["#ef4444", "#22c55e", "#f59e0b"]
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        title: { display: true, text: "Cost-Benefit Analysis", font: { size: 16 } },
+        legend: { display: false },
+        tooltip: {
+          callbacks: {
+            label: function(context) {
+              return `${context.label}: ₹${context.parsed.y.toLocaleString()}`;
             }
           }
-        },
-        scales: {
-          y: { beginAtZero: true, title: { display: true, text: "Amount (₹)" } }
         }
+      },
+      scales: {
+        y: { beginAtZero: true, title: { display: true, text: "Amount (₹)" } }
       }
-    });
-  }
+    }
+  });
 }
 
 /* Render Net Benefit Chart */
 function renderNetBenefitChart() {
-  const scenario = buildFETPScenario();
-  if (!scenario) return;
-  const trainees = parseInt(scenario.annualCapacity, 10);
-  const uptake = computeFETPUptake(scenario);
+  if (!currentScenario) return;
+  const trainees = parseInt(currentScenario.annualCapacity, 10);
+  const uptake = computeFETPUptake(currentScenario);
   const effectiveEnrollment = trainees * uptake;
   const totalCost = calculateTotalCost();
   const qVal = document.getElementById("benefitScenario").value === "low" ? 0.01 :
                document.getElementById("benefitScenario").value === "high" ? 0.08 : 0.05;
   const monetizedBenefits = effectiveEnrollment * qVal * 50000;
   const netBenefit = monetizedBenefits - totalCost;
-  const ctx = document.getElementById("netBenefitChart");
-  if (ctx) {
-    if (netBenefitChart) netBenefitChart.destroy();
-    netBenefitChart = new Chart(ctx, {
-      type: "doughnut",
-      data: {
-        labels: ["Net Benefit", "Net Loss"],
-        datasets: [{
-          data: [Math.max(netBenefit, 0), Math.max(-netBenefit, 0)],
-          backgroundColor: [netBenefit > 0 ? "#22c55e" : "#ef4444", "#f3f4f6"]
-        }]
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-          title: { display: true, text: "Net Benefit Breakdown", font: { size: 16 } },
-          tooltip: {
-            callbacks: {
-              label: function(context) {
-                return `${context.label}: ₹${context.parsed.y.toLocaleString()}`;
-              }
+  const ctx = document.getElementById("netBenefitChart").getContext("2d");
+  if (netBenefitChart) netBenefitChart.destroy();
+  netBenefitChart = new Chart(ctx, {
+    type: "doughnut",
+    data: {
+      labels: ["Net Benefit", "Net Loss"],
+      datasets: [{
+        data: [Math.max(netBenefit, 0), Math.max(-netBenefit, 0)],
+        backgroundColor: [netBenefit > 0 ? "#22c55e" : "#ef4444", "#f3f4f6"]
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        title: { display: true, text: "Net Benefit Breakdown", font: { size: 16 } },
+        tooltip: {
+          callbacks: {
+            label: function(context) {
+              return `${context.label}: ₹${context.parsed.y.toLocaleString()}`;
             }
           }
         }
       }
-    });
-  }
+    }
+  });
 }
 
 /* Render Costs Benefits Results */
 function renderCostsBenefitsResults() {
-  const scenario = buildFETPScenario();
-  if (!scenario) {
-    document.getElementById("costsBenefitsResults").innerHTML = "<p>Please select all inputs before computing costs.</p>";
+  if (!currentScenario) {
+    document.getElementById("costsBenefitsResults").innerHTML = "<p>Please calculate a scenario first.</p>";
     return;
   }
-  const trainees = parseInt(scenario.annualCapacity, 10);
-  const uptake = computeFETPUptake(scenario);
+  const trainees = parseInt(currentScenario.annualCapacity, 10);
+  const uptake = computeFETPUptake(currentScenario);
   const effectiveEnrollment = trainees * uptake;
   const totalCost = calculateTotalCost();
   const qVal = document.getElementById("benefitScenario").value === "low" ? 0.01 :
@@ -308,23 +300,22 @@ function renderCostsBenefitsResults() {
 /* Save Scenario */
 let savedScenarios = [];
 function saveScenario() {
-  const sc = buildFETPScenario();
-  if (!sc) {
-    alert("Please select all inputs before saving a scenario.");
+  if (!currentScenario) {
+    alert("Please calculate a scenario first.");
     return;
   }
-  const uptake = computeFETPUptake(sc);
+  const uptake = computeFETPUptake(currentScenario);
   const pct = uptake * 100;
   const qVal = 0.05; // Default to medium
-  const trainees = parseInt(sc.annualCapacity, 10);
+  const trainees = parseInt(currentScenario.annualCapacity, 10);
   const effectiveEnrollment = trainees * uptake;
   const totalCost = calculateTotalCost();
   const monetizedBenefits = effectiveEnrollment * qVal * 50000;
   const netBenefit = monetizedBenefits - totalCost;
-  sc.uptake = pct.toFixed(2);
-  sc.netBenefit = netBenefit.toLocaleString();
-  sc.name = `Scenario ${savedScenarios.length + 1}`;
-  savedScenarios.push(sc);
+  currentScenario.uptake = pct.toFixed(2);
+  currentScenario.netBenefit = netBenefit.toLocaleString();
+  currentScenario.name = `Scenario ${savedScenarios.length + 1}`;
+  savedScenarios.push({...currentScenario});
   updateScenarioTable();
 }
 
@@ -395,6 +386,7 @@ function downloadCSV() {
 /* Reset Inputs */
 function resetInputs() {
   document.querySelectorAll('select').forEach(select => select.selectedIndex = 0);
+  currentScenario = null;
 }
 
 /* Optimize Configuration */
@@ -427,6 +419,7 @@ function optimizeConfiguration() {
       if (select) select.value = bestScenario[key];
     });
     alert(`Optimized configuration set for maximum uptake: ${(maxUptake * 100).toFixed(2)}%`);
+    currentScenario = bestScenario;
   } else {
     alert("Optimization failed.");
   }
