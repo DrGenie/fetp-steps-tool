@@ -99,17 +99,23 @@ function calculateScenario() {
                         pct < 70 ? "Uptake is moderate. Some adjustments may boost support." :
                                    "Uptake is high. This configuration is promising.";
   document.getElementById("modalResults").innerHTML = `
-    <p><strong>Predicted Uptake:</strong> ${pct.toFixed(2)}%</p>
-    <p><strong>Recommendation:</strong> ${recommendation}</p>
-    <p><strong>Delivery Method:</strong> ${scenario.deliveryMethod}</p>
-    <p><strong>Training Model:</strong> ${scenario.trainingModel}</p>
-    <p><strong>Type of Training:</strong> ${scenario.trainingType}</p>
-    <p><strong>Annual Capacity:</strong> ${scenario.annualCapacity}</p>
-    <p><strong>Stipend Support:</strong> ₹${scenario.stipendSupport}</p>
-    <p><strong>Career Pathway:</strong> ${scenario.careerPathway}</p>
-    <p><strong>Geographic Distribution:</strong> ${scenario.geographicDistribution}</p>
-    <p><strong>Accreditation:</strong> ${scenario.accreditation}</p>
-    <p><strong>Total Cost:</strong> ${scenario.totalCost}</p>
+    <div class="row">
+      <div class="col-md-6">
+        <p><strong>Predicted Uptake:</strong> ${pct.toFixed(2)}%</p>
+        <p><strong>Recommendation:</strong> ${recommendation}</p>
+        <p><strong>Delivery Method:</strong> ${scenario.deliveryMethod}</p>
+        <p><strong>Training Model:</strong> ${scenario.trainingModel}</p>
+        <p><strong>Type of Training:</strong> ${scenario.trainingType}</p>
+      </div>
+      <div class="col-md-6">
+        <p><strong>Annual Capacity:</strong> ${scenario.annualCapacity}</p>
+        <p><strong>Stipend Support:</strong> ₹${scenario.stipendSupport}</p>
+        <p><strong>Career Pathway:</strong> ${scenario.careerPathway}</p>
+        <p><strong>Geographic Distribution:</strong> ${scenario.geographicDistribution}</p>
+        <p><strong>Accreditation:</strong> ${scenario.accreditation}</p>
+        <p><strong>Total Cost:</strong> ${scenario.totalCost}</p>
+      </div>
+    </div>
   `;
   const modal = new bootstrap.Modal(document.getElementById('resultModal'));
   modal.show();
@@ -246,9 +252,9 @@ function renderNetBenefitChart() {
     netBenefitChart = new Chart(ctx, {
       type: "doughnut",
       data: {
-        labels: ["Net Benefit"],
+        labels: ["Net Benefit", "Net Loss"],
         datasets: [{
-          data: [netBenefit, totalCost - monetizedBenefits],
+          data: [Math.max(netBenefit, 0), Math.max(-netBenefit, 0)],
           backgroundColor: [netBenefit > 0 ? "#22c55e" : "#ef4444", "#f3f4f6"]
         }]
       },
