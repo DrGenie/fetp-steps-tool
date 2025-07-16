@@ -146,6 +146,37 @@ function showUptakeRecommendations() {
   document.getElementById('uptakeResults').innerHTML = `<p>${recommendation}</p>`;
 }
 
+/* Calculate Total Cost from Inputs */
+function calculateTotalCost() {
+  const direct_salary_inCountry = parseFloat(document.getElementById("direct_salary_inCountry").value) || 0;
+  const direct_salary_other = parseFloat(document.getElementById("direct_salary_other").value) || 0;
+  const direct_equipment_office = parseFloat(document.getElementById("direct_equipment_office").value) || 0;
+  const direct_equipment_software = parseFloat(document.getElementById("direct_equipment_software").value) || 0;
+  const direct_facilities_rent = parseFloat(document.getElementById("direct_facilities_rent").value) || 0;
+  const direct_trainee_allowances = parseFloat(document.getElementById("direct_trainee_allowances").value) || 0;
+  const direct_trainee_equipment = parseFloat(document.getElementById("direct_trainee_equipment").value) || 0;
+  const direct_trainee_software = parseFloat(document.getElementById("direct_trainee_software").value) || 0;
+  const direct_training_materials = parseFloat(document.getElementById("direct_training_materials").value) || 0;
+  const direct_training_workshops = parseFloat(document.getElementById("direct_training_workshops").value) || 0;
+  const direct_travel_inCountry = parseFloat(document.getElementById("direct_travel_inCountry").value) || 0;
+  const direct_travel_international = parseFloat(document.getElementById("direct_travel_international").value) || 0;
+  const direct_other = parseFloat(document.getElementById("direct_other").value) || 0;
+  const indirect_admin_management = parseFloat(document.getElementById("indirect_admin_management").value) || 0;
+  const indirect_admin_maintenance = parseFloat(document.getElementById("indirect_admin_maintenance").value) || 0;
+  const indirect_inKind_salary = parseFloat(document.getElementById("indirect_inKind_salary").value) || 0;
+  const indirect_infra_upgrades = parseFloat(document.getElementById("indirect_infra_upgrades").value) || 0;
+  const indirect_infra_depreciation = parseFloat(document.getElementById("indirect_infra_depreciation").value) || 0;
+  const indirect_utilities_shared = parseFloat(document.getElementById("indirect_utilities_shared").value) || 0;
+  const indirect_prof_legal = parseFloat(document.getElementById("indirect_prof_legal").value) || 0;
+  const indirect_training_staff = parseFloat(document.getElementById("indirect_training_staff").value) || 0;
+  const indirect_opportunity = parseFloat(document.getElementById("indirect_opportunity").value) || 0;
+  const indirect_other = parseFloat(document.getElementById("indirect_other").value) || 0;
+
+  const totalCost = direct_salary_inCountry + direct_salary_other + direct_equipment_office + direct_equipment_software + direct_facilities_rent + direct_trainee_allowances + direct_trainee_equipment + direct_trainee_software + direct_training_materials + direct_training_workshops + direct_travel_inCountry + direct_travel_international + direct_other + indirect_admin_management + indirect_admin_maintenance + indirect_inKind_salary + indirect_infra_upgrades + indirect_infra_depreciation + indirect_utilities_shared + indirect_prof_legal + indirect_training_staff + indirect_opportunity + indirect_other;
+
+  return totalCost;
+}
+
 /* Render Cost-Benefit Chart */
 function renderCostBenefitChart() {
   const scenario = buildFETPScenario();
@@ -153,8 +184,7 @@ function renderCostBenefitChart() {
   const trainees = parseInt(scenario.annualCapacity, 10);
   const uptake = computeFETPUptake(scenario);
   const effectiveEnrollment = trainees * uptake;
-  const costMapping = { low: 27000, medium: 55000, high: 83000 };
-  const totalCost = costMapping[scenario.totalCost];
+  const totalCost = calculateTotalCost();
   const qVal = document.getElementById("benefitScenario").value === "low" ? 0.01 :
                document.getElementById("benefitScenario").value === "high" ? 0.08 : 0.05;
   const monetizedBenefits = effectiveEnrollment * qVal * 50000;
@@ -192,8 +222,7 @@ function renderNetBenefitChart() {
   const trainees = parseInt(scenario.annualCapacity, 10);
   const uptake = computeFETPUptake(scenario);
   const effectiveEnrollment = trainees * uptake;
-  const costMapping = { low: 27000, medium: 55000, high: 83000 };
-  const totalCost = costMapping[scenario.totalCost];
+  const totalCost = calculateTotalCost();
   const qVal = document.getElementById("benefitScenario").value === "low" ? 0.01 :
                document.getElementById("benefitScenario").value === "high" ? 0.08 : 0.05;
   const monetizedBenefits = effectiveEnrollment * qVal * 50000;
@@ -229,8 +258,7 @@ function renderCostsBenefitsResults() {
   const trainees = parseInt(scenario.annualCapacity, 10);
   const uptake = computeFETPUptake(scenario);
   const effectiveEnrollment = trainees * uptake;
-  const costMapping = { low: 27000, medium: 55000, high: 83000 };
-  const totalCost = costMapping[scenario.totalCost];
+  const totalCost = calculateTotalCost();
   const qVal = document.getElementById("benefitScenario").value === "low" ? 0.01 :
                document.getElementById("benefitScenario").value === "high" ? 0.08 : 0.05;
   const monetizedBenefits = effectiveEnrollment * qVal * 50000;
@@ -242,7 +270,7 @@ function renderCostsBenefitsResults() {
     <p><strong>Predicted Uptake:</strong> ${(uptake * 100).toFixed(2)}%</p>
     <p><strong>Number of Trainees:</strong> ${trainees}</p>
     <p><strong>Effective Enrollment:</strong> ${Math.round(effectiveEnrollment)}</p>
-    <p><strong>Total Cost:</strong> ₹${totalCost.toLocaleString()} per month</p>
+    <p><strong>Total Cost:</strong> ₹${totalCost.toLocaleString()} per year</p>
     <p><strong>Monetized Benefits:</strong> ₹${monetizedBenefits.toLocaleString()}</p>
     <p><strong>Net Benefit:</strong> ₹${netBenefit.toLocaleString()}</p>
     <p><strong>Policy Recommendation:</strong> ${econAdvice}</p>
@@ -262,8 +290,7 @@ function saveScenario() {
   const qVal = 0.05; // Default to medium
   const trainees = parseInt(sc.annualCapacity, 10);
   const effectiveEnrollment = trainees * uptake;
-  const costMapping = { low: 27000, medium: 55000, high: 83000 };
-  const totalCost = costMapping[sc.totalCost];
+  const totalCost = calculateTotalCost();
   const monetizedBenefits = effectiveEnrollment * qVal * 50000;
   const netBenefit = monetizedBenefits - totalCost;
   sc.uptake = pct.toFixed(2);
