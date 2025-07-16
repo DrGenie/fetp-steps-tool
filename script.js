@@ -8,7 +8,6 @@
 
 /* Global variables */
 let currentScenario = null;
-let probChartFETP = null;
 let costBenefitChart = null;
 let netBenefitChart = null;
 
@@ -57,8 +56,6 @@ const attributeOptions = {
   accreditation: ['unaccredited', 'national', 'international'],
   totalCost: ['low', 'medium', 'high']
 };
-
-/* Tab Switching is handled by Bootstrap */
 
 /* Build Scenario */
 function buildFETPScenario() {
