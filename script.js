@@ -1,5 +1,5 @@
 /* Advanced FETP Decision Aid Tool
- * - Tab switching and accordion toggling
+ * - Tab switching and accordiosn toggling
  * - DCE model for uptake prediction
  * - Chart rendering for adoption and cost-benefit analysis
  * - Scenario saving and PDF export
