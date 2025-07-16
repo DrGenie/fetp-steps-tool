@@ -195,19 +195,19 @@ header p.lead {
   box-shadow: 0 3px 8px rgba(0, 150, 136, 0.3);
 }
 
-.modal-content {
+.modal-content, .offcanvas {
   border-radius: 12px;
   box-shadow: 0 6px 30px var(--shadow-color);
 }
 
-.modal-header {
+.modal-header, .offcanvas-header {
   background: var(--primary-color);
   color: #fff;
   border-top-left-radius: 12px;
   border-top-right-radius: 12px;
 }
 
-.modal-title {
+.modal-title, .offcanvas-title {
   font-weight: 600;
 }
 
@@ -298,6 +298,12 @@ header p.lead {
   }
   .card {
     padding: 15px;
+  }
+  .modal-dialog {
+    max-width: 90%;
+  }
+  .offcanvas {
+    width: 80% !important;
   }
 }
 
