@@ -12,7 +12,7 @@
 <body>
   <div class="container">
     <header class="text-center">
-      <h1>Advanced FETP Decision Aid Tool</h1>
+      <h1>STEPS Decision Aid Tool</h1>
       <p class="lead">Explore different configurations for the Advanced Field Epidemiology Training Program (FETP) to predict programme uptake, evaluate cost–benefit tradeoffs, and inform policy design.</p>
     </header>
     <div class="instruction-banner card">
@@ -297,35 +297,115 @@
         <div class="card">
           <h4>Cost–Benefit Analysis <i class="fa-solid fa-circle-info info-icon" data-bs-toggle="tooltip" title="Detailed breakdown of costs and benefits"></i></h4>
           <p>Compares the costs of implementing the program to health benefits, measured in Quality-Adjusted Life Years (QALYs). Calculate a scenario to see results.</p>
+          <div class="card mb-3">
+            <h5>Benefits Measure Considerations <i class="fa-solid fa-circle-info info-icon" data-bs-toggle="tooltip" title="Guidelines for outcome measurement"></i></h5>
+            <p>Are outcomes measured in appropriate units and valued accurately? The choice of outcome measure is dependent on the initiative’s objectives and the economic evaluation method being undertaken. As a general guide:</p>
+            <ul>
+              <li>If the outcomes relate to mortality, the units of measurement typically include number of life-years gained, number of deaths averted or quality-adjusted life-years.</li>
+              <li>Outcomes related to morbidity may be measured in terms of number of cases cured or disease specific measures for chronic conditions.</li>
+              <li>Intermediate measures (e.g. blood pressure reduction) may be used where it is not possible to measure actual health outcomes and where there is evidence of a relationship between the intermediate measures and the health outcomes. This especially applies to preventative initiatives when outcomes are significantly downstream, as you may be reliant on data on intermediate measures to have confidence the initiative is on-track to improve the outcomes of interest (as predicted in your program logic).</li>
+              <li>When conducting a cost-benefit analysis, life-years gained, deaths averted or quality adjusted life-years can be monetised using the value of a statistical life.</li>
+            </ul>
+            <p>The data sources used to measure and value outcomes should be clearly provided. Consider also whether these data sources were likely to provide accurate and reliable information.</p>
+          </div>
           <div class="row">
             <div class="col-md-6">
-              <h5>Cost Parameters (Optional: adjust for custom analysis)</h5>
+              <h5>Direct Costs (Adjust for custom analysis)</h5>
               <div class="form-group mb-3">
-                <label for="fixed_procurement">Procurement (fixed)</label>
-                <input type="number" id="fixed_procurement" class="form-control" value="80000">
+                <label for="direct_salary_inCountry">Salary and Benefits - In-Country Program Staff</label>
+                <input type="number" id="direct_salary_inCountry" class="form-control" value="6000000">
               </div>
               <div class="form-group mb-3">
-                <label for="fixed_administration">Administration & Staffing</label>
-                <input type="number" id="fixed_administration" class="form-control" value="30000">
+                <label for="direct_salary_other">Salary and Benefits - Other</label>
+                <input type="number" id="direct_salary_other" class="form-control" value="0">
               </div>
               <div class="form-group mb-3">
-                <label for="fixed_legal">Legal & Compliance</label>
-                <input type="number" id="fixed_legal" class="form-control" value="10000">
+                <label for="direct_equipment_office">Equipment and Supplies - Office Equipment</label>
+                <input type="number" id="direct_equipment_office" class="form-control" value="1000000">
               </div>
               <div class="form-group mb-3">
-                <label for="fixed_communication">Communication & Outreach</label>
-                <input type="number" id="fixed_communication" class="form-control" value="15000">
+                <label for="direct_equipment_software">Equipment and Supplies - Office Software</label>
+                <input type="number" id="direct_equipment_software" class="form-control" value="500000">
               </div>
               <div class="form-group mb-3">
-                <label for="fixed_monitoring">Monitoring & Data Systems</label>
-                <input type="number" id="fixed_monitoring" class="form-control" value="20000">
+                <label for="direct_facilities_rent">Facilities - Rent and Utilities</label>
+                <input type="number" id="direct_facilities_rent" class="form-control" value="0">
               </div>
               <div class="form-group mb-3">
-                <label for="variablePerPerson">Variable Cost per Person</label>
-                <input type="number" id="variablePerPerson" class="form-control" value="40">
+                <label for="direct_trainee_allowances">Trainee Support - Allowances</label>
+                <input type="number" id="direct_trainee_allowances" class="form-control" value="12500000">
+              </div>
+              <div class="form-group mb-3">
+                <label for="direct_trainee_equipment">Trainee Support - Trainee Equipment</label>
+                <input type="number" id="direct_trainee_equipment" class="form-control" value="1000000">
+              </div>
+              <div class="form-group mb-3">
+                <label for="direct_trainee_software">Trainee Support - Trainee Software</label>
+                <input type="number" id="direct_trainee_software" class="form-control" value="500000">
+              </div>
+              <div class="form-group mb-3">
+                <label for="direct_training_materials">Training - Materials</label>
+                <input type="number" id="direct_training_materials" class="form-control" value="250000">
+              </div>
+              <div class="form-group mb-3">
+                <label for="direct_training_workshops">Training - Workshops and Seminars</label>
+                <input type="number" id="direct_training_workshops" class="form-control" value="1500000">
+              </div>
+              <div class="form-group mb-3">
+                <label for="direct_travel_inCountry">Travel Expenses - In-Country Travel</label>
+                <input type="number" id="direct_travel_inCountry" class="form-control" value="5000000">
+              </div>
+              <div class="form-group mb-3">
+                <label for="direct_travel_international">Travel Expenses - International Travel</label>
+                <input type="number" id="direct_travel_international" class="form-control" value="0">
+              </div>
+              <div class="form-group mb-3">
+                <label for="direct_other">Other Expenses</label>
+                <input type="number" id="direct_other" class="form-control" value="250000">
               </div>
             </div>
             <div class="col-md-6">
+              <h5>Indirect Costs (Adjust for custom analysis)</h5>
+              <div class="form-group mb-3">
+                <label for="indirect_admin_management">Administrative Support - Management and Oversight</label>
+                <input type="number" id="indirect_admin_management" class="form-control" value="10000000">
+              </div>
+              <div class="form-group mb-3">
+                <label for="indirect_admin_maintenance">Administrative Support - Office Maintenance</label>
+                <input type="number" id="indirect_admin_maintenance" class="form-control" value="0">
+              </div>
+              <div class="form-group mb-3">
+                <label for="indirect_inKind_salary">In-kind contributions - Salary</label>
+                <input type="number" id="indirect_inKind_salary" class="form-control" value="0">
+              </div>
+              <div class="form-group mb-3">
+                <label for="indirect_infra_upgrades">Infrastructure Costs - Facility Upgrades</label>
+                <input type="number" id="indirect_infra_upgrades" class="form-control" value="0">
+              </div>
+              <div class="form-group mb-3">
+                <label for="indirect_infra_depreciation">Infrastructure Costs - Equipment Depreciation</label>
+                <input type="number" id="indirect_infra_depreciation" class="form-control" value="500000">
+              </div>
+              <div class="form-group mb-3">
+                <label for="indirect_utilities_shared">Utilities - Shared Services</label>
+                <input type="number" id="indirect_utilities_shared" class="form-control" value="500000">
+              </div>
+              <div class="form-group mb-3">
+                <label for="indirect_prof_legal">Professional Services - Legal and Financial Consulting</label>
+                <input type="number" id="indirect_prof_legal" class="form-control" value="0">
+              </div>
+              <div class="form-group mb-3">
+                <label for="indirect_training_staff">Training and Capacity Building - Staff Development</label>
+                <input type="number" id="indirect_training_staff" class="form-control" value="100000">
+              </div>
+              <div class="form-group mb-3">
+                <label for="indirect_opportunity">Opportunity cost - Trainee's salary payments had they been employed</label>
+                <input type="number" id="indirect_opportunity" class="form-control" value="0">
+              </div>
+              <div class="form-group mb-3">
+                <label for="indirect_other">Other indirect Costs</label>
+                <input type="number" id="indirect_other" class="form-control" value="0">
+              </div>
               <h5>Benefit Scenario (Value per QALY)</h5>
               <select id="benefitScenario" class="form-control mb-3">
                 <option value="low">Low (A$40k / €35k)</option>
