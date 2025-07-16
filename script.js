@@ -193,30 +193,39 @@ function renderCostBenefitChart() {
                document.getElementById("benefitScenario").value === "high" ? 0.08 : 0.05;
   const monetizedBenefits = effectiveEnrollment * qVal * 50000;
   const netBenefit = monetizedBenefits - totalCost;
-  const ctx = document.getElementById("costBenefitChart").getContext("2d");
-  if (costBenefitChart) costBenefitChart.destroy();
-  costBenefitChart = new Chart(ctx, {
-    type: "bar",
-    data: {
-      labels: ["Total Cost", "Monetized Benefits", "Net Benefit"],
-      datasets: [{
-        label: "₹",
-        data: [totalCost, monetizedBenefits, netBenefit],
-        backgroundColor: ["#ef4444", "#22c55e", "#f59e0b"]
-      }]
-    },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      plugins: {
-        title: { display: true, text: "Cost-Benefit Analysis", font: { size: 16 } },
-        legend: { display: false }
+  const ctx = document.getElementById("costBenefitChart");
+  if (ctx) {
+    if (costBenefitChart) costBenefitChart.destroy();
+    costBenefitChart = new Chart(ctx, {
+      type: "bar",
+      data: {
+        labels: ["Total Cost", "Monetized Benefits", "Net Benefit"],
+        datasets: [{
+          label: "₹",
+          data: [totalCost, monetizedBenefits, netBenefit],
+          backgroundColor: ["#ef4444", "#22c55e", "#f59e0b"]
+        }]
       },
-      scales: {
-        y: { beginAtZero: true, title: { display: true, text: "Amount (₹)" } }
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          title: { display: true, text: "Cost-Benefit Analysis", font: { size: 16 } },
+          legend: { display: false },
+          tooltip: {
+            callbacks: {
+              label: function(context) {
+                return `${context.label}: ₹${context.parsed.y.toLocaleString()}`;
+              }
+            }
+          }
+        },
+        scales: {
+          y: { beginAtZero: true, title: { display: true, text: "Amount (₹)" } }
+        }
       }
-    }
-  });
+    });
+  }
 }
 
 /* Render Net Benefit Chart */
@@ -231,25 +240,34 @@ function renderNetBenefitChart() {
                document.getElementById("benefitScenario").value === "high" ? 0.08 : 0.05;
   const monetizedBenefits = effectiveEnrollment * qVal * 50000;
   const netBenefit = monetizedBenefits - totalCost;
-  const ctx = document.getElementById("netBenefitChart").getContext("2d");
-  if (netBenefitChart) netBenefitChart.destroy();
-  netBenefitChart = new Chart(ctx, {
-    type: "doughnut",
-    data: {
-      labels: ["Net Benefit"],
-      datasets: [{
-        data: [netBenefit, totalCost - monetizedBenefits],
-        backgroundColor: [netBenefit > 0 ? "#22c55e" : "#ef4444", "#f3f4f6"]
-      }]
-    },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      plugins: {
-        title: { display: true, text: "Net Benefit Breakdown", font: { size: 16 } }
+  const ctx = document.getElementById("netBenefitChart");
+  if (ctx) {
+    if (netBenefitChart) netBenefitChart.destroy();
+    netBenefitChart = new Chart(ctx, {
+      type: "doughnut",
+      data: {
+        labels: ["Net Benefit"],
+        datasets: [{
+          data: [netBenefit, totalCost - monetizedBenefits],
+          backgroundColor: [netBenefit > 0 ? "#22c55e" : "#ef4444", "#f3f4f6"]
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          title: { display: true, text: "Net Benefit Breakdown", font: { size: 16 } },
+          tooltip: {
+            callbacks: {
+              label: function(context) {
+                return `${context.label}: ₹${context.parsed.y.toLocaleString()}`;
+              }
+            }
+          }
+        }
       }
-    }
-  });
+    });
+  }
 }
 
 /* Render Costs Benefits Results */
