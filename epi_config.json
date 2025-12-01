@@ -1,101 +1,157 @@
 {
-  "version": "1.0",
-  "display": {
-    "inrPerUSD": 83
+  "meta": {
+    "name": "STEPS FETP India epidemiological configuration",
+    "version": "1.1",
+    "description": "Default multipliers and indicative monetary values for graduates and outbreak responses used by the STEPS decision aid.",
+    "lastUpdated": "2025-11-30",
+    "author": "Mesfin Genie and collaborators",
+    "notes": "Version 1.1 adds optional ranges for sensitivity analysis and pre-defined scenario multipliers while preserving backwards compatibility with Version 1.0."
+  },
+  "general": {
+    "planningHorizonYears": 5,
+    "inrPerUsd": 83,
+    "discountRateAnnual": 0.03,
+    "applyDiscountingToOutbreakBenefits": false
   },
   "tiers": {
     "frontline": {
+      "label": "Frontline",
       "durationMonths": 3,
-      "gradRate": 0.90,
-      "outbreaksPerCohortPerYear": 0.30,
-      "valuePerGraduate": 300000,
-      "valuePerOutbreak": 20000000
+      "gradRate": 0.9,
+      "outbreaksPerCohortPerYear": 0.3,
+      "valuePerGraduate": 400000,
+      "valuePerOutbreak": 30000000,
+      "minGradRate": 0.6,
+      "maxGradRate": 1.0,
+      "minOutbreaksPerCohortPerYear": 0.0,
+      "maxOutbreaksPerCohortPerYear": 2.0,
+      "minValuePerGraduate": 200000,
+      "maxValuePerGraduate": 1000000,
+      "minValuePerOutbreak": 10000000,
+      "maxValuePerOutbreak": 60000000
     },
     "intermediate": {
+      "label": "Intermediate",
       "durationMonths": 12,
-      "gradRate": 0.92,
-      "outbreaksPerCohortPerYear": 0.50,
+      "gradRate": 0.9,
+      "outbreaksPerCohortPerYear": 0.5,
       "valuePerGraduate": 500000,
-      "valuePerOutbreak": 25000000
+      "valuePerOutbreak": 30000000,
+      "minGradRate": 0.6,
+      "maxGradRate": 1.0,
+      "minOutbreaksPerCohortPerYear": 0.0,
+      "maxOutbreaksPerCohortPerYear": 2.0,
+      "minValuePerGraduate": 250000,
+      "maxValuePerGraduate": 1200000,
+      "minValuePerOutbreak": 10000000,
+      "maxValuePerOutbreak": 60000000
     },
     "advanced": {
+      "label": "Advanced",
       "durationMonths": 24,
       "gradRate": 0.95,
-      "outbreaksPerCohortPerYear": 0.80,
-      "valuePerGraduate": 800000,
-      "valuePerOutbreak": 30000000
+      "outbreaksPerCohortPerYear": 0.8,
+      "valuePerGraduate": 600000,
+      "valuePerOutbreak": 40000000,
+      "minGradRate": 0.7,
+      "maxGradRate": 1.0,
+      "minOutbreaksPerCohortPerYear": 0.0,
+      "maxOutbreaksPerCohortPerYear": 2.0,
+      "minValuePerGraduate": 300000,
+      "maxValuePerGraduate": 1500000,
+      "minValuePerOutbreak": 15000000,
+      "maxValuePerOutbreak": 80000000
     }
   },
-  "costTemplates": {
-    "frontline": {
-      "WHO": {
-        "opportunityCostShare": 0.20,
-        "components": {
-          "Staff and trainers": 0.45,
-          "Travel and per diem": 0.15,
-          "Training materials": 0.10,
-          "Supervision and mentorship": 0.15,
-          "Management and overheads": 0.10,
-          "Other": 0.05
+  "ui": {
+    "graduationRate": {
+      "min": 0.6,
+      "max": 1.0,
+      "step": 0.01
+    },
+    "outbreaksPerCohortPerYear": {
+      "min": 0.0,
+      "max": 2.0,
+      "step": 0.05
+    },
+    "valuePerGraduate": {
+      "min": 200000,
+      "max": 1500000,
+      "step": 10000
+    },
+    "valuePerOutbreak": {
+      "min": 10000000,
+      "max": 80000000,
+      "step": 1000000
+    },
+    "planningHorizonYears": {
+      "min": 1,
+      "max": 10,
+      "step": 1
+    },
+    "inrPerUsd": {
+      "min": 60,
+      "max": 100,
+      "step": 1
+    },
+    "discountRateAnnual": {
+      "min": 0.0,
+      "max": 0.10,
+      "step": 0.005
+    }
+  },
+  "scenarios": {
+    "baseline": {
+      "label": "Baseline (default)",
+      "description": "Default configuration matching the values used in the STEPS technical appendix.",
+      "multipliers": {
+        "frontline": {
+          "valuePerGraduateMultiplier": 1.0,
+          "valuePerOutbreakMultiplier": 1.0
+        },
+        "intermediate": {
+          "valuePerGraduateMultiplier": 1.0,
+          "valuePerOutbreakMultiplier": 1.0
+        },
+        "advanced": {
+          "valuePerGraduateMultiplier": 1.0,
+          "valuePerOutbreakMultiplier": 1.0
         }
       }
     },
-    "intermediate": {
-      "WHO": {
-        "opportunityCostShare": 0.20,
-        "components": {
-          "Staff and trainers": 0.40,
-          "Travel and per diem": 0.18,
-          "Training materials": 0.08,
-          "Supervision and mentorship": 0.18,
-          "Management and overheads": 0.11,
-          "Other": 0.05
-        }
-      },
-      "NIE": {
-        "opportunityCostShare": 0.18,
-        "components": {
-          "Staff and trainers": 0.42,
-          "Travel and per diem": 0.14,
-          "Training materials": 0.09,
-          "Supervision and mentorship": 0.20,
-          "Management and overheads": 0.10,
-          "Other": 0.05
-        }
-      },
-      "NCDC": {
-        "opportunityCostShare": 0.22,
-        "components": {
-          "Staff and trainers": 0.38,
-          "Travel and per diem": 0.20,
-          "Training materials": 0.08,
-          "Supervision and mentorship": 0.19,
-          "Management and overheads": 0.10,
-          "Other": 0.05
+    "conservative": {
+      "label": "Conservative benefits",
+      "description": "Reduces monetary benefits by 25 percent for all tiers, holding graduation rates and outbreaks per cohort fixed.",
+      "multipliers": {
+        "frontline": {
+          "valuePerGraduateMultiplier": 0.75,
+          "valuePerOutbreakMultiplier": 0.75
+        },
+        "intermediate": {
+          "valuePerGraduateMultiplier": 0.75,
+          "valuePerOutbreakMultiplier": 0.75
+        },
+        "advanced": {
+          "valuePerGraduateMultiplier": 0.75,
+          "valuePerOutbreakMultiplier": 0.75
         }
       }
     },
-    "advanced": {
-      "NIE": {
-        "opportunityCostShare": 0.22,
-        "components": {
-          "Staff and trainers": 0.44,
-          "Travel and per diem": 0.16,
-          "Training materials": 0.07,
-          "Supervision and mentorship": 0.18,
-          "Management and overheads": 0.10,
-          "Other": 0.05
-        }
-      },
-      "NCDC": {
-        "opportunityCostShare": 0.25,
-        "components": {
-          "Staff and trainers": 0.42,
-          "Travel and per diem": 0.17,
-          "Training materials": 0.08,
-          "Supervision and mentorship": 0.18,
-          "Management and overheads": 0.10,
-          "Other": 0.05
+    "highImpact": {
+      "label": "High impact benefits",
+      "description": "Increases monetary benefits by 25 percent for all tiers, holding graduation rates and outbreaks per cohort fixed.",
+      "multipliers": {
+        "frontline": {
+          "valuePerGraduateMultiplier": 1.25,
+          "valuePerOutbreakMultiplier": 1.25
+        },
+        "intermediate": {
+          "valuePerGraduateMultiplier": 1.25,
+          "valuePerOutbreakMultiplier": 1.25
+        },
+        "advanced": {
+          "valuePerGraduateMultiplier": 1.25,
+          "valuePerOutbreakMultiplier": 1.25
         }
       }
     }
